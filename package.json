@@ -1,0 +1,45 @@
+{
+  "name": "apdex-board",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcLlobet/apdex-board.git"
+  },
+  "author": "https://github.com/MarcLlobet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcLlobet/apdex-board/issues"
+  },
+  "homepage": "https://github.com/MarcLlobet/apdex-board#readme",
+  "dependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^4.2.0",
+    "path": "^0.12.7",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/helper-module-imports": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-classes": "^7.9.5",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
+    "babel-preset-airbnb": "^5.0.0",
+    "css-loader": "^3.5.2",
+    "eslint": "^6.8.0",
+    "json-loader": "^0.5.7",
+    "postcss-loader": "^3.0.0",
+    "prettier": "2.0.4",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.4"
+  }
+}
