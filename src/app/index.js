@@ -13,7 +13,7 @@ console.log(hosts.topAppsByHost)
 
 const
   h1 = div(css.header__title, 'Apps by Host'),
-  email = div(css.header__email, 'myemail@gmail.com'),
+  email = div(css.header__email, `for user myemail@gmail.com`),
   layoutToggler = document.createElement('toggle-input')
 
 layoutToggler.options = {
