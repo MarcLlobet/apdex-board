@@ -29,13 +29,14 @@ class Top extends Array {
     let i = this.#lastIndex
     if (i === this.max && app.apdex <= this[i].apdex) return
 
-    for (; app.apdex > this[i].apdex; --i) {
+    do {
       this[i + 1] = this[i]
       if (!i || this[i - 1].apdex >= app.apdex) {
         this[i] = app
         break
       }
-    }
+      --i
+    } while (app.apdex > this[i].apdex)
 
     this.lowestApdex = this[this.#lastIndex].apdex
   }

@@ -1,4 +1,5 @@
 const path = require('path');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -9,8 +10,7 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: './dist',
-    hot: false,
+    contentBase: path.join(__dirname, './dist'),
     port: 5500
   },
   plugins: [
@@ -18,9 +18,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/template.html')
     }),
+    new FaviconsWebpackPlugin({
+      logo: path.resolve(__dirname, 'src/favicon.ico'),
+      cache: false,
+      inject: true
+    })
   ],
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.scss'],
     alias: {
       data: path.resolve(__dirname, 'data/host-app-data.json')
     }
@@ -37,20 +42,30 @@ module.exports = {
         use: "babel-loader"
       },
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         use: [
           'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
-              modules: true
+              modules: {
+                mode: 'local',
+                exportGlobals: true,
+                localIdentName: '[local]@[hash:base64:5]'
+              }
             }
           },
           'postcss-loader',
-          'sass-loader'
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass')
+            }
+          }
         ]
-      }
+      },
+      { test: /\.(woff2?|eot|(o|t)tf|svg|ico)$/, loader: 'file-loader' }
     ]
   }
 };

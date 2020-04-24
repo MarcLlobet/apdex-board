@@ -1,6 +1,6 @@
-import Top from './top'
+import Top from '../top'
 
-class AppsToHosts {
+class Hosts {
   constructor(data) {
     this.data = data
   }
@@ -26,8 +26,12 @@ class AppsToHosts {
     return Hosts
   }
 
-  addAppToHosts() { }
-  removeAppFromHosts() { }
+  addAppToHosts(app) {
+    this.data[app].host.add(app)
+  }
+  removeAppFromHosts() {
+    this.data[app].host.pop(app)
+  }
 }
 
-export default AppsToHosts
+export default Hosts
