@@ -1,5 +1,5 @@
 import { div } from '../dom'
-import css from './style'
+import './style'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -86,7 +86,7 @@ class HostBox extends HTMLElement {
       const
         apdex = div('hostBox__apdex', app.apdex),
         name = div('hostBox__name', app.name),
-        contributors = div('hostBox__contributors', app.contributors),
+        contributors = div('hostBox__contributors', app.contributors.join(', ')),
         row = div('hostBox__row', [name, contributors])
 
       return div('hostBox__li', [apdex, row])
