@@ -1,78 +1,13 @@
 import { div } from '../dom'
-import './style'
+import css from './style'
+import WebComponent from '../webComponent'
 
-const template = document.createElement('template')
-template.innerHTML = `
-<style>
-* {
-  box-sizing: border-box;
-}
-
-.toggleInput {
-  position: relative;
-  padding-left: 20px;
-  cursor: pointer;
-}
-
-.toggleInput:not(:first-child){
-  margin-left: 30px;
-}
-
-.toggleInput__input {
-  z-index: 5;
-  opacity: 0;
-}
-.toggleInput__label:before,
-.toggleInput__label:after,
-.toggleInput__input {
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  position: absolute;
-  top: -5px;
-  bottom: 0;
-  left: 0px;
-  border-radius: 4px;
-}
-
-.toggleInput__label:before {
-  content: '';
-  background: var(--input-bg-color);
-  border: 1px solid;
-  border-color: var(--input-border-color);
-  z-index: 2;
-}
-
-.toggleInput__label:after {
-  content: '';
-  transition: transform ease-out 220ms;
-  transform: scale(0);
-  background: var(--input-tick-color);
-  z-index: 3;
-  border: 1px solid transparent;
-}
-
-.toggleInput__input:checked + .toggleInput__label:after {
-  transform: scale(0.6);
-}
-
-.toggleInput__input + .toggleInput__label {
-  padding-left: 5px;
-}
-.toggleInput__label {
-  display: block;
-}
-</style>
-`
 let i = 0
 
-class ToggleInput extends HTMLElement {
+class ToggleInput extends WebComponent {
   constructor() {
-    super()
+    super({ css })
     i++
-    this.root = this.attachShadow({ mode: 'open' })
-    this.root.appendChild(template.content.cloneNode(true))
 
     const id = `checkbox-${i}`
     this.input = document.createElement('input')

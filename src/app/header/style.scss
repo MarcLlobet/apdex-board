@@ -1,0 +1,34 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-end;
+}
+
+.header__title {
+  font-size: 35px;
+  line-height: 43px;
+  font-weight: bold;
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding-right: 10px;
+}
+
+.header__email {
+  font-size: 18px;
+  line-height: 22px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  text-align: right;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.header__email + .header__toggle {
+  padding-left: 30px;
+}
+
+.header__toggle {
+  font-size: 14px;
+}

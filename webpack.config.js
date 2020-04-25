@@ -23,7 +23,8 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.js', '.scss'],
+    modules: ['src', 'node_modules'],
+    extensions: ['.js', '.scss', '.css'],
     alias: {
       data: path.resolve(__dirname, 'data/host-app-data.json')
     }
@@ -40,7 +41,11 @@ module.exports = {
         use: "babel-loader"
       },
       {
-        test: /\.s?css$/,
+        test: /\.css$/,
+        use: ['css-to-string-loader', 'css-loader']
+      },
+      {
+        test: /\.scss$/,
         use: [
           'style-loader',
           {

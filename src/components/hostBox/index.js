@@ -1,75 +1,18 @@
 import { div } from '../dom'
-import './style'
+import css from './style'
+import WebComponent from '../webComponent'
 
-const template = document.createElement('template')
-template.innerHTML = `
-<style>
-*{
-  box-sizing: border-box;
-}
-.hostBox__apdex {
-  font-size: 13px;
-  opacity: 0.62;
-  font-weight: bold;
-  flex-basis: 40px;
-  flex-shrink: 0;
-  padding-right: 5px;
-}
-.hostBox__name,
-.hostBox__contributors {
-  display: inline;
-}
-.hostBox__name + .hostBox__contributors:before {
-  content: '-';
-  margin: 0 5px;
-}
-.hostBox__row {
-  font-size: 16px;
-}
-.hostBox__li + .hostBox__li {
-  padding-top: 23px;
-}
-.hostBox__li {
-  color: var(--list-text-color);
-  display: flex;
-  flex-direction: row;
-
-}
-.hostBox__ol {
-
-}
-.hostBox__title {
-  color: var(--title-text-color);
-  font-weight: bold;
-  font-size: 16px;
-}
-.hostBox__title + .hostBox__body{
-  padding-top: 23px;
-}
-
-.hostBox {
-  padding: 30px;
-  line-height: 19px;
-  font-family: "HelveticaNeueCyr", sans-serif;
-  background: var(--box-bg-color);
-}
-</style>
-`
-
-class HostBox extends HTMLElement {
+class HostBox extends WebComponent {
   constructor() {
-    super()
-
-    this.root = this.attachShadow({ mode: 'open' })
-    this.root.appendChild(template.content.cloneNode(true))
+    super({ css })
   }
 
   set host(host) {
-    this.title = host
+    this._host = host
   }
 
   get host() {
-    return this.title || ''
+    return this._host || ''
   }
 
   set apps(apps) {
