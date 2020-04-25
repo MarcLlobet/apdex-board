@@ -2,14 +2,11 @@ import { div } from '../dom'
 import css from './style'
 import WebComponent from '../webComponent'
 
-let i = 0
-
 class ToggleInput extends WebComponent {
   constructor() {
     super({ css })
-    i++
 
-    const id = `checkbox-${i}`
+    const id = `toogleInput`
     this.input = document.createElement('input')
     this.input.type = 'checkbox'
     this.input.id = id

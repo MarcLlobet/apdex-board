@@ -44,4 +44,5 @@
   line-height: 19px;
   font-family: "HelveticaNeueCyr", sans-serif;
   background: var(--box-bg-color);
+  cursor: pointer;
 }

@@ -5,9 +5,9 @@ class Store {
     const appsByHosts = this.groupByHost(Data)
 
     this.sortedAppsByHosts = Object.entries(appsByHosts)
-      .reduce((prev, [hostName, apps]) => {
-        return ({ ...prev, [hostName]: this.decrementSortByApdex(apps) })
-      }, {})
+      .reduce((prev, [hostName, apps]) =>
+        ({ ...prev, [hostName]: this.decrementSortByApdex(apps) })
+        , {})
   }
 
   groupByHost(arr) {
@@ -30,7 +30,7 @@ class Store {
     return hosts
   }
 
-  * decrementSortByApdex(arr, max = 100, min = 0) {
+  * decrementSortByApdex(arr, min = 0, max = 100) {
     let i = min,
       j = 0,
       len = arr.length,
@@ -52,9 +52,9 @@ class Store {
         orderedApps[j] = count[i].pop();
 
         if (orderedApps.length === 5) yield orderedApps
-        if (orderedApps.length === 25) yield orderedApps
-        if (orderedApps.length < 25) continue
-        yield orderedApps
+        if (orderedApps.length === 25) yield orderedApps.filter((_, index) => index > 4)
+        if (orderedApps.length <= 25) continue
+        yield [orderedApps[j]]
       }
     }
 
@@ -66,6 +66,7 @@ class Store {
   }
 
   getTopAppsByHost(hostName) {
+    console.log(hostName)
     return this.sortedAppsByHosts[hostName].next().value
   }
 
