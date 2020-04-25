@@ -1,7 +1,9 @@
-const AppsPerHost = 25
+const AppsPerHost = 5
 
 class Top extends Array {
-  get max() { return AppsPerHost - 1 }
+
+  get top5() { return 4 }
+
   constructor(app) {
     super()
     this.push(app)
@@ -21,22 +23,37 @@ class Top extends Array {
 
 
   get #lastIndex() {
-    const last = this.length < this.max ? this.length : this.max
+    const last = this.length < this.top5 ? this.length : this.top5
     return last - 1
   }
 
+  // function selectionSort(arr){
+  //   var minIdx, temp, 
+  //       len = arr.length;
+
+  //   for(var i = 0; i < len; i++){
+  //     minIdx = i;
+  //     for(var  j = i+1; j<len; j++){
+  //        if(arr[j]<arr[minIdx]){
+  //           minIdx = j;
+  //        }
+  //     }
+  //     temp = arr[i];
+  //     arr[i] = arr[minIdx];
+  //     arr[minIdx] = temp;
+  //   }
+  //   return arr;
+  // }
+
   add(app) {
     let i = this.#lastIndex
-    if (i === this.max && app.apdex <= this[i].apdex) return
+    if (i === this.top5 && app.apdex <= this.lowestApdex) return
 
-    do {
-      this[i + 1] = this[i]
-      if (!i || this[i - 1].apdex >= app.apdex) {
-        this[i] = app
-        break
-      }
-      --i
-    } while (app.apdex > this[i].apdex)
+    for (++i; this[i - 1] && this[i - 1].apdex < app.apdex;) {
+      this[i] = this[--i]
+    }
+
+    this[i] = app
 
     this.lowestApdex = this[this.#lastIndex].apdex
   }

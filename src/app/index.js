@@ -1,13 +1,8 @@
-import Data from 'data'
-import Hosts from './hosts'
+import Store from './store'
 import '../components'
 import "@marcius-capital/fonts"
 import css from './style'
 import { div } from '../components'
-
-
-const hosts = new Hosts(Data)
-console.log(hosts.topAppsByHost)
 
 
 
@@ -33,7 +28,7 @@ layoutToggler.toggle = function () {
 const header = div(css.header, [h1, email, layoutToggler]),
   body = div(css.body)
 
-Object.entries(hosts.topAppsByHost).forEach(([host, apps]) => {
+Object.entries(Store.getHosts()).forEach(([host, apps]) => {
 
   const hostBox = document.createElement('host-box')
   hostBox.host = host
