@@ -1,5 +1,6 @@
 import Data from 'data'
 
+
 class Store {
   constructor() {
     const appsByHosts = this.groupByHost(Data)
@@ -74,7 +75,11 @@ class Store {
   //   Object.values(this.sortedAppsByHosts).forEach(host => host.next().value)
   // }
 
-  // removeAppFromHosts() {}
+  removeAppFromHosts(app) {
+    app.host.forEach(hostName => {
+      this.sortedAppsByHosts[hostName].find(({ name: appName }) => appName === app.name).pop()
+    })
+  }
 }
 
 export default new Store()

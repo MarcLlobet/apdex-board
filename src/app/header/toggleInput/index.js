@@ -1,8 +1,6 @@
-import { div } from '../dom'
 import css from './style'
-import WebComponent from '../webComponent'
 
-class ToggleInput extends WebComponent {
+class ToggleInput extends $.WebComponent {
   constructor() {
     super({ css })
 
@@ -17,7 +15,7 @@ class ToggleInput extends WebComponent {
     this.label.htmlFor = id
     this.label.setAttribute('class', 'toggleInput__label')
 
-    this.toggler = div('toggleInput', [this.input, this.label])
+    this.toggler = $.div('toggleInput', [this.input, this.label])
     this.toggler.addEventListener('click', () => this.toggle.bind(this))
   }
 

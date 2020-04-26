@@ -1,8 +1,6 @@
-import { div } from '../dom'
 import css from './style'
-import WebComponent from '../webComponent'
 
-class HostBox extends WebComponent {
+class HostBox extends $.WebComponent {
   constructor() {
     super({ css })
 
@@ -35,12 +33,12 @@ class HostBox extends WebComponent {
 
   createRow(app) {
     const
-      apdex = div('hostBox__apdex', app.apdex),
-      name = div('hostBox__name', app.name),
-      contributors = div('hostBox__contributors', app.contributors.join(', ')),
-      row = div('hostBox__row', [name, contributors])
+      apdex = $.div('hostBox__apdex', app.apdex),
+      name = $.div('hostBox__name', app.name),
+      contributors = $.div('hostBox__contributors', app.contributors.join(', ')),
+      row = $.div('hostBox__row', [name, contributors])
 
-    return div('hostBox__li', [apdex, row])
+    return $.div('hostBox__li', [apdex, row])
   }
 
   createRows(apps) {
@@ -56,10 +54,10 @@ class HostBox extends WebComponent {
   render() {
 
     const lis = this.createRows(this.apps),
-      ol = div('hostBox__ol', lis),
-      title = div('hostBox__title', this.host),
-      body = div('hostBox__body', ol),
-      element = div('hostBox', [title, body])
+      ol = $.div('hostBox__ol', lis),
+      title = $.div('hostBox__title', this.host),
+      body = $.div('hostBox__body', ol),
+      element = $.div('hostBox', [title, body])
 
     this.root.appendChild(element)
   }

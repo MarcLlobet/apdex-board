@@ -1,11 +1,11 @@
 import css from './style'
-import { div } from 'components'
+import './toggleInput'
 
 
 
 const
-  h1 = div(css.header__title, 'Apps by Host'),
-  email = div(css.header__email, `for user myemail@gmail.com`),
+  h1 = $.div(css.header__title, 'Apps by Host'),
+  email = $.div(css.header__email, `for user myemail@gmail.com`),
   layoutToggler = document.createElement('toggle-input')
 
 layoutToggler.options = {
@@ -22,5 +22,5 @@ layoutToggler.toggle = function () {
   }
 }
 
-const Header = div(css.header, [h1, email, layoutToggler])
+const Header = $.div(css.header, [h1, email, layoutToggler])
 export default Header

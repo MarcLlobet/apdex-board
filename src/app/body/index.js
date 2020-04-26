@@ -1,8 +1,8 @@
 import Store from '../store'
 import css from './style'
-import { div } from 'components'
+import './hostBox'
 
-const Body = div(css.body),
+const Body = $.div(css.body),
   hosts = Store.getHosts()
 
 Object.entries(hosts).forEach(([host, apps]) => {
@@ -15,6 +15,8 @@ Object.entries(hosts).forEach(([host, apps]) => {
     const topAppsByHost = Store.getTopAppsByHost(host)
     this.addRows(topAppsByHost)
   }
+
+
 
   Body.appendChild(hostBox)
 })

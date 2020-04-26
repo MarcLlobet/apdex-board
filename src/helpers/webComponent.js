@@ -1,4 +1,4 @@
-class WebComponent extends HTMLElement {
+export class WebComponent extends HTMLElement {
   constructor(props) {
     super()
 
@@ -10,5 +10,3 @@ class WebComponent extends HTMLElement {
   }
 
 }
-
-export default WebComponent
