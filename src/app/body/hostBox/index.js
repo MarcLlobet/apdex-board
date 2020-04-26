@@ -5,15 +5,36 @@ class HostBox extends $.WebComponent {
     super({ css })
 
     // this.root.addEventListener('click', (e) => this.handleClick(e))
+
+    const
+      hostName = $.div('hostBox__hostName'),
+      collapser = $.div('hostBox__collapser'),
+      title = $.div('hostBox__title', [hostName, collapser]),
+      ol = $.div('hostBox__ol'),
+      body = $.div('hostBox__body', ol),
+      element = $.div('hostBox hostBox--collapsed', [title, body])
+    this.root.appendChild(element)
+
+    let isFirstClick = true
+
+    title.addEventListener('click', e => {
+
+      if (isFirstClick) {
+        this.clickOnTitle(e)
+        isFirstClick = false
+      }
+
+      this.collapse()
+    })
+
+    this.isCollapsed = true
   }
 
-  // set handleClick(callback) {
-  //   this._handleClick = _handleClick
-  // }
-
-  // get handleClick(e) {
-  //   return this._handleClick
-  // }
+  collapse() {
+    this.isCollapsed = !this.isCollapsed
+    this.root.querySelector('.hostBox').classList.toggle('hostBox--collapsed')
+    this.render()
+  }
 
   set host(host) {
     this._host = host
@@ -28,7 +49,14 @@ class HostBox extends $.WebComponent {
   }
 
   get apps() {
-    return this._apps || []
+    if (this.isCollapsed) {
+      this._shownApps = this._apps.filter((_, index) => index <= 4)
+      const ol = this.root.querySelector('.hostBox__ol')
+      ol.innerHTML = null
+    } else {
+      this._shownApps = this._apps
+    }
+    return this._shownApps || []
   }
 
   createRow(app) {
@@ -41,10 +69,6 @@ class HostBox extends $.WebComponent {
     return $.div('hostBox__li', [apdex, row])
   }
 
-  createRows(apps) {
-    return apps.map(app => this.createRow(app))
-  }
-
   addRows(apps) {
     const ol = this.root.querySelector('.hostBox__ol')
 
@@ -52,14 +76,13 @@ class HostBox extends $.WebComponent {
   }
 
   render() {
+    const ol = this.root.querySelector('.hostBox__ol')
 
-    const lis = this.createRows(this.apps),
-      ol = $.div('hostBox__ol', lis),
-      title = $.div('hostBox__title', this.host),
-      body = $.div('hostBox__body', ol),
-      element = $.div('hostBox', [title, body])
+    this.apps.forEach(app => ol.appendChild(this.createRow(app)))
 
-    this.root.appendChild(element)
+
+    const hostName = this.root.querySelector('.hostBox__hostName')
+    hostName.innerHTML = this.host
   }
 }
 

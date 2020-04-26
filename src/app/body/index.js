@@ -11,7 +11,7 @@ Object.entries(hosts).forEach(([host, apps]) => {
   hostBox.host = host
   hostBox.apps = apps
   hostBox.render()
-  hostBox.onclick = function () {
+  hostBox.clickOnTitle = function () {
     const topAppsByHost = Store.getTopAppsByHost(host)
     this.addRows(topAppsByHost)
   }

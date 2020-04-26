@@ -32,9 +32,17 @@
 }
 .hostBox__title {
   color: var(--title-text-color);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.hostBox__hostName {
   font-weight: bold;
   font-size: 16px;
 }
+
 .hostBox__title + .hostBox__body {
   padding-top: 23px;
 }
@@ -45,4 +53,14 @@
   font-family: "HelveticaNeueCyr", sans-serif;
   background: var(--box-bg-color);
   cursor: pointer;
+}
+
+.hostBox--collapsed .hostBox__collapser:before {
+  content: "+ Show more";
+}
+
+.hostBox__collapser:before {
+  font-size: 14px;
+  line-height: 16px;
+  content: "- Show less";
 }
