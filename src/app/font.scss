@@ -1,0 +1,22 @@
+$fontName: "HelveticaNeueCyr";
+$fontPath: "~@marcius-capital/fonts/HelveticaNeueCyr/";
+
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url("#{$fontPath}HelveticaNeueCyr-Roman.eot");
+  src: local("HelveticaNeueCyr-Roman"), url("#{$fontPath}HelveticaNeueCyr-Roman.eot?#iefix") format("embedded-opentype"),
+    url("#{$fontPath}HelveticaNeueCyr-Roman.woff") format("woff"),
+    url("#{$fontPath}HelveticaNeueCyr-Roman.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HelveticaNeueCyr";
+  src: url("#{$fontPath}HelveticaNeueCyr-Bold.eot");
+  src: local("HelveticaNeueCyr-Bold"), url("#{$fontPath}HelveticaNeueCyr-Bold.eot?#iefix") format("embedded-opentype"),
+    url("#{$fontPath}HelveticaNeueCyr-Bold.woff") format("woff"),
+    url("#{$fontPath}HelveticaNeueCyr-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
