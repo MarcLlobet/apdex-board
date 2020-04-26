@@ -1,6 +1,5 @@
 import Data from 'data'
 
-
 class Service {
   constructor() {
     this.data = Data

@@ -67,9 +67,17 @@ class HostBox extends $.WebComponent {
       apdex = $.div('hostBox__apdex', app.apdex),
       name = $.div('hostBox__name', app.name),
       contributors = $.div('hostBox__contributors', app.contributors.join(', ')),
-      row = $.div('hostBox__row', [name, contributors])
+      row = $.div('hostBox__row', [name, contributors]),
+      li = $.div('hostBox__li', [apdex, row])
 
-    return $.div('hostBox__li', [apdex, row])
+    apdex.querySelector('.hostBox__apdex')
+
+    apdex.addEventListener('click', () => {
+      li.parentNode.removeChild(li)
+      this.selectRow(app)
+    })
+
+    return li
   }
 
   render() {

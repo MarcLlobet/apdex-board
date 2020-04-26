@@ -4,10 +4,18 @@ class Store {
   constructor() {
     this.appsByHost = Service.getSortedAppsByHosts()
     this.data = {}
+    this.getHostsFromService()
   }
 
+  emitUpdate() {
+    $.dispatcher.dispatch('update', Promise.resolve(this.data))
+  }
 
   getHosts() {
+    return Promise.resolve(this.data)
+  }
+
+  getHostsFromService() {
 
     let response = Promise.all(
       Object.values(this.appsByHost)
@@ -16,8 +24,6 @@ class Store {
       let hosts = Object.keys(this.appsByHost)
         .reduce((prev, host, index) =>
           ({ ...prev, [host]: values[index] }), {})
-
-      this.data = hosts
 
       return hosts
     })
@@ -28,19 +34,18 @@ class Store {
 
   getTopAppsByHost(hostName) {
     let response = this.appsByHost[hostName].next().value
-    console.log(this.data, response)
 
     return response
   }
 
-  // addAppToHosts() {
-  //   Object.values(this.appsByHost).forEach(host => host.next().value)
-  // }
-
   removeAppFromHosts(app) {
-    app.host.forEach(hostName => {
-      this.appsByHost[hostName].find(({ name: appName }) => appName === app.name).pop()
+    app.host.forEach(async hostName => {
+      let data = await Promise.resolve(this.data[hostName]),
+        index = data.findIndex(({ name }) => name === app.name)
+
+      this.data[hostName].splice(index, 1)
     })
+    this.emitUpdate()
   }
 
 }

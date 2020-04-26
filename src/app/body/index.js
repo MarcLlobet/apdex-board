@@ -3,6 +3,8 @@ import css from './style'
 import './hostBox'
 
 const Body = $.div(css.body)
+renderBody()
+
 
 async function renderBody() {
   let hosts = await Store.getHosts()
@@ -17,13 +19,20 @@ async function renderBody() {
       let topAppsByHost = await Store.getTopAppsByHost(host)
       hostBox.apps = topAppsByHost
     }
+    hostBox.selectRow = async function (app) {
+      Store.removeAppFromHosts(app)
+      let otherTopAppsByHost = await Store.getTopAppsByHost(host)
+      hostBox.apps = otherTopAppsByHost
+    }
 
     Body.appendChild(hostBox)
   })
 }
 
-renderBody()
-
+$.dispatcher.addListener('update', async data => {
+  let values = await data
+  renderBody()
+});
 
 
 export default Body

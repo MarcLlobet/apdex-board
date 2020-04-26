@@ -54,13 +54,24 @@
   background: var(--box-bg-color);
 }
 
-.hostBox--collapsed .hostBox__collapser:before {
-  content: "+ Show more";
-}
-
-.hostBox__collapser:before {
+.hostBox__collapser {
   cursor: pointer;
   font-size: 14px;
   line-height: 16px;
+}
+
+.hostBox__collapser:before {
   content: "- Show less";
+}
+.hostBox__collapser:after {
+  content: "(top 5 apps)";
+  padding-left: 5px;
+  color: var(--list-text-color);
+}
+
+.hostBox--collapsed .hostBox__collapser:before {
+  content: "+ Show more";
+}
+.hostBox--collapsed .hostBox__collapser:after {
+  content: "(top 25 apps)";
 }
