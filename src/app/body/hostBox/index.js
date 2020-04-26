@@ -4,8 +4,6 @@ class HostBox extends $.WebComponent {
   constructor() {
     super({ css })
 
-    // this.root.addEventListener('click', (e) => this.handleClick(e))
-
     const
       hostName = $.div('hostBox__hostName'),
       collapser = $.div('hostBox__collapser'),
@@ -17,46 +15,51 @@ class HostBox extends $.WebComponent {
 
     let isFirstClick = true
 
-    title.addEventListener('click', e => {
-
+    collapser.addEventListener('click', () => {
       if (isFirstClick) {
-        this.clickOnTitle(e)
+        this.getTopApps()
         isFirstClick = false
       }
-
       this.collapse()
     })
 
     this.isCollapsed = true
+    this._apps = []
+    this._store = []
+    this.hiddenApps = []
   }
 
   collapse() {
     this.isCollapsed = !this.isCollapsed
     this.root.querySelector('.hostBox').classList.toggle('hostBox--collapsed')
-    this.render()
+
+    const ol = this.root.querySelector('.hostBox__ol')
+    if (this.isCollapsed) {
+      this.hiddenApps = Array.from(ol.childNodes)
+        .filter((_, index) => index >= 5)
+        .map(app => ol.removeChild(app))
+
+    } else {
+      this.hiddenApps.forEach(app => ol.appendChild(app))
+    }
   }
 
-  set host(host) {
-    this._host = host
+
+  set store(store) {
+    this._store = store
   }
 
-  get host() {
-    return this._host || ''
+  get store() {
+    return this._store
   }
 
   set apps(apps) {
-    this._apps = apps
+    this._apps = [...this._store, ...apps]
+    this.render()
   }
 
   get apps() {
-    if (this.isCollapsed) {
-      this._shownApps = this._apps.filter((_, index) => index <= 4)
-      const ol = this.root.querySelector('.hostBox__ol')
-      ol.innerHTML = null
-    } else {
-      this._shownApps = this._apps
-    }
-    return this._shownApps || []
+    return this._apps
   }
 
   createRow(app) {
@@ -69,12 +72,6 @@ class HostBox extends $.WebComponent {
     return $.div('hostBox__li', [apdex, row])
   }
 
-  addRows(apps) {
-    const ol = this.root.querySelector('.hostBox__ol')
-
-    apps.forEach(app => ol.appendChild(this.createRow(app)))
-  }
-
   render() {
     const ol = this.root.querySelector('.hostBox__ol')
 
@@ -82,7 +79,7 @@ class HostBox extends $.WebComponent {
 
 
     const hostName = this.root.querySelector('.hostBox__hostName')
-    hostName.innerHTML = this.host
+    hostName.innerHTML = this.host || ''
   }
 }
 

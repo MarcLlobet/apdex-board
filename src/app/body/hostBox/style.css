@@ -52,7 +52,6 @@
   line-height: 19px;
   font-family: "HelveticaNeueCyr", sans-serif;
   background: var(--box-bg-color);
-  cursor: pointer;
 }
 
 .hostBox--collapsed .hostBox__collapser:before {
@@ -60,6 +59,7 @@
 }
 
 .hostBox__collapser:before {
+  cursor: pointer;
   font-size: 14px;
   line-height: 16px;
   content: "- Show less";

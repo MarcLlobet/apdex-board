@@ -2,23 +2,28 @@ import Store from '../store'
 import css from './style'
 import './hostBox'
 
-const Body = $.div(css.body),
-  hosts = Store.getHosts()
+const Body = $.div(css.body)
 
-Object.entries(hosts).forEach(([host, apps]) => {
+async function renderBody() {
+  let hosts = await Store.getHosts()
 
-  const hostBox = document.createElement('host-box')
-  hostBox.host = host
-  hostBox.apps = apps
-  hostBox.render()
-  hostBox.clickOnTitle = function () {
-    const topAppsByHost = Store.getTopAppsByHost(host)
-    this.addRows(topAppsByHost)
-  }
+  Object.entries(hosts).forEach(async ([host, apps]) => {
+
+    const hostBox = document.createElement('host-box')
+    let row = await apps
+    hostBox.host = host
+    hostBox.apps = row
+    hostBox.getTopApps = async function () {
+      let topAppsByHost = await Store.getTopAppsByHost(host)
+      hostBox.apps = topAppsByHost
+    }
+
+    Body.appendChild(hostBox)
+  })
+}
+
+renderBody()
 
 
-
-  Body.appendChild(hostBox)
-})
 
 export default Body
