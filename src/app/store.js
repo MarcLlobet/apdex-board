@@ -2,52 +2,32 @@ import Service from './service'
 
 class Store {
   constructor() {
-    this.appsByHost = Service.getSortedAppsByHosts()
     this.data = {}
-    this.getHostsFromService()
+
+    $.dispatcher.addListener('data', data => {
+      this.data = data
+      this.emitUpdate()
+    })
   }
 
   emitUpdate() {
-    $.dispatcher.dispatch('update', Promise.resolve(this.data))
+    $.dispatcher.dispatch('update')
   }
 
-  getHosts() {
-    return Promise.resolve(this.data)
+  getTopAppsByHosts() {
+    return Object.entries(this.data).reduce((prev, [host, apps]) => ({
+      ...prev,
+      [host]: apps.filter((_, index) => index <= 4)
+    }), {})
   }
 
-  getHostsFromService() {
-
-    let response = Promise.all(
-      Object.values(this.appsByHost)
-        .map(host => host.next().value)
-    ).then(values => {
-      let hosts = Object.keys(this.appsByHost)
-        .reduce((prev, host, index) =>
-          ({ ...prev, [host]: values[index] }), {})
-
-      return hosts
-    })
-
-    this.data = response
-    return response
-  }
-
-  getTopAppsByHost(hostName) {
-    let response = this.appsByHost[hostName].next().value
-
-    return response
+  getTopAppsByHost(hostName, num) {
+    return this.data[hostName].filter((_, index) => index <= (num - 1))
   }
 
   removeAppFromHosts(app) {
-    app.host.forEach(async hostName => {
-      let data = await Promise.resolve(this.data[hostName]),
-        index = data.findIndex(({ name }) => name === app.name)
-
-      this.data[hostName].splice(index, 1)
-    })
-    this.emitUpdate()
+    Service.removeAppFromHosts(app)
   }
-
 }
 
 export default new Store()

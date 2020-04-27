@@ -13,23 +13,63 @@
 .hostBox__contributors {
   display: inline;
 }
+
 .hostBox__name + .hostBox__contributors:before {
   content: "-";
   margin: 0 5px;
 }
+
 .hostBox__row {
   font-size: 16px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  flex-grow: 1;
 }
-.hostBox__li + .hostBox__li {
-  padding-top: 23px;
+
+.hostBox__li--removed.hostBox__li:before {
+  animation-play-state: running;
 }
+
 .hostBox__li {
   color: var(--list-text-color);
   display: flex;
   flex-direction: row;
+  position: relative;
+  z-index: 4;
+  padding: 10px 0 11px;
 }
+
+.hostBox__li:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--remove-bg-color);
+  opacity: 0;
+  animation: remove;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-play-state: paused;
+}
+
+@keyframes remove {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
 .hostBox__ol {
 }
+
 .hostBox__title {
   color: var(--title-text-color);
   display: flex;
@@ -44,11 +84,12 @@
 }
 
 .hostBox__title + .hostBox__body {
-  padding-top: 23px;
+  margin-top: 12px;
 }
 
 .hostBox {
   padding: 30px;
+  padding-bottom: 19px;
   line-height: 19px;
   font-family: "HelveticaNeueCyr", sans-serif;
   background: var(--box-bg-color);
@@ -74,4 +115,48 @@
 }
 .hostBox--collapsed .hostBox__collapser:after {
   content: "(top 25 apps)";
+}
+
+.hostBox__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  overflow: hidden;
+  order: 3;
+  z-index: 6;
+  transition: opacity ease-in-out 220ms;
+  opacity: 0;
+  background: url("./remove.svg");
+}
+
+.hostBox__row:after {
+  content: "";
+  z-index: 1;
+  width: 300px;
+  right: -150px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(to right, transparent 50%, var(--box-bg-color) 100%);
+  background-position: 0;
+  transition: background-position ease-in-out 230ms;
+}
+
+.hostBox__li:hover .hostBox__remove {
+  opacity: 1;
+}
+
+.hostBox__li:hover .hostBox__row:after {
+  background-position: -150px;
 }

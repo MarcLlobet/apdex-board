@@ -13,48 +13,20 @@ class HostBox extends $.WebComponent {
       element = $.div('hostBox hostBox--collapsed', [title, body])
     this.root.appendChild(element)
 
-    let isFirstClick = true
-
-    collapser.addEventListener('click', () => {
-      if (isFirstClick) {
-        this.getTopApps()
-        isFirstClick = false
-      }
-      this.collapse()
-    })
-
     this.isCollapsed = true
     this._apps = []
-    this._store = []
-    this.hiddenApps = []
+
+    collapser.addEventListener('click', () => this.collapse())
   }
 
   collapse() {
     this.isCollapsed = !this.isCollapsed
+    this.getTopApps(this.host)
     this.root.querySelector('.hostBox').classList.toggle('hostBox--collapsed')
-
-    const ol = this.root.querySelector('.hostBox__ol')
-    if (this.isCollapsed) {
-      this.hiddenApps = Array.from(ol.childNodes)
-        .filter((_, index) => index >= 5)
-        .map(app => ol.removeChild(app))
-
-    } else {
-      this.hiddenApps.forEach(app => ol.appendChild(app))
-    }
-  }
-
-
-  set store(store) {
-    this._store = store
-  }
-
-  get store() {
-    return this._store
   }
 
   set apps(apps) {
-    this._apps = [...this._store, ...apps]
+    this._apps = apps
     this.render()
   }
 
@@ -62,28 +34,34 @@ class HostBox extends $.WebComponent {
     return this._apps
   }
 
-  createRow(app) {
-    const
-      apdex = $.div('hostBox__apdex', app.apdex),
-      name = $.div('hostBox__name', app.name),
-      contributors = $.div('hostBox__contributors', app.contributors.join(', ')),
-      row = $.div('hostBox__row', [name, contributors]),
-      li = $.div('hostBox__li', [apdex, row])
-
-    apdex.querySelector('.hostBox__apdex')
-
-    apdex.addEventListener('click', () => {
-      li.parentNode.removeChild(li)
-      this.selectRow(app)
-    })
-
-    return li
-  }
-
   render() {
     const ol = this.root.querySelector('.hostBox__ol')
+    ol.innerHTML = ''
 
-    this.apps.forEach(app => ol.appendChild(this.createRow(app)))
+    this.apps.forEach(app => {
+      const
+        apdex = $.div('hostBox__apdex', app.apdex),
+        name = $.div('hostBox__name', app.name),
+        contributors = $.div('hostBox__contributors', app.contributors.join(', ')),
+        row = $.div('hostBox__row', [name, contributors]),
+        remove = $.div('hostBox__remove'),
+        li = $.div('hostBox__li', [apdex, remove, row])
+      li.setAttribute('key', app.key)
+      remove.querySelector('.hostBox__apdex')
+
+      remove.addEventListener('click', () => {
+        let boxes = document.querySelectorAll('host-box')
+        Array.from(boxes).forEach(box => {
+          let li = box.shadowRoot.querySelector(`[key="${app.key}"]`)
+          if (li) li.classList.toggle('hostBox__li--removed')
+          setTimeout(() => {
+            this.selectRow(app)
+          }, 1000)
+        })
+      })
+
+      ol.appendChild(li)
+    })
 
 
     const hostName = this.root.querySelector('.hostBox__hostName')

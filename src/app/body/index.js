@@ -3,36 +3,37 @@ import css from './style'
 import './hostBox'
 
 const Body = $.div(css.body)
-renderBody()
 
 
-async function renderBody() {
-  let hosts = await Store.getHosts()
+function renderBody() {
+  Body.innerHTML = ''
+  let hosts = Store.getTopAppsByHosts()
 
-  Object.entries(hosts).forEach(async ([host, apps]) => {
+  Object.entries(hosts).forEach(([host, apps]) => {
 
     const hostBox = document.createElement('host-box')
-    let row = await apps
     hostBox.host = host
-    hostBox.apps = row
-    hostBox.getTopApps = async function () {
-      let topAppsByHost = await Store.getTopAppsByHost(host)
+    hostBox.apps = apps
+    hostBox.getTopApps = hostName => {
+      let topAppsByHost
+      if (!hostBox.isCollapsed) {
+        topAppsByHost = Store.getTopAppsByHost(hostName, 25)
+      } else {
+        topAppsByHost = Store.getTopAppsByHost(hostName, 5)
+      }
+
       hostBox.apps = topAppsByHost
     }
-    hostBox.selectRow = async function (app) {
+
+    hostBox.selectRow = function (app) {
       Store.removeAppFromHosts(app)
-      let otherTopAppsByHost = await Store.getTopAppsByHost(host)
-      hostBox.apps = otherTopAppsByHost
     }
 
     Body.appendChild(hostBox)
   })
 }
 
-$.dispatcher.addListener('update', async data => {
-  let values = await data
-  renderBody()
-});
+$.dispatcher.addListener('update', () => renderBody())
 
 
 export default Body
