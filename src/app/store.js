@@ -5,13 +5,26 @@ class Store {
     this.data = {}
 
     $.dispatcher.addListener('data', data => {
+      let areHostsUpdated = Object.keys(this.data).length === Object.keys(data).length
+
+      if (areHostsUpdated)
+        this.emitUpdateToHosts()
+
       this.data = data
       this.emitUpdate()
     })
   }
 
+  emitUpdateToHosts() {
+    $.dispatcher.dispatch('hosts-update')
+  }
+
   emitUpdate() {
     $.dispatcher.dispatch('update')
+  }
+
+  getHostsList() {
+    return Object.keys(this.data)
   }
 
   getTopAppsByHosts() {
@@ -27,6 +40,10 @@ class Store {
 
   removeAppFromHosts(app) {
     Service.removeAppFromHosts(app)
+  }
+
+  addAppToHosts(app) {
+    Service.addAppToHosts(app)
   }
 }
 

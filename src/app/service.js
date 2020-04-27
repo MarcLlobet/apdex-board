@@ -29,6 +29,12 @@ class Service {
     this.sortByHosts()
   }
 
+  addAppToHosts(app) {
+    this.clearData()
+    this.data.push(app)
+    this.sortByHosts()
+  }
+
   emitUpdate() {
     $.dispatcher.dispatch('data', this.storedData)
   }

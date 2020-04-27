@@ -1,0 +1,108 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  background: var(--box-bg-color);
+  padding: 30px;
+}
+
+.form__hostElement {
+  display: block;
+}
+
+.form__hosts {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50%;
+  padding-left: 30px;
+  padding-top: 23px;
+}
+
+.form__hostsTitle {
+  font-weight: bold;
+  padding-bottom: 15px;
+}
+
+.form__hostsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__hostLi {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 0;
+}
+
+.form__hostLi input[type="checkbox"] {
+  margin-left: 0;
+}
+
+.form__appData {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50%;
+  padding-right: 30px;
+  padding-top: 23px;
+}
+
+.form__input + .form__input {
+  margin-top: 23px;
+}
+
+.form__input {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__input.form__input--number {
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.form__input {
+  font-weight: bold;
+}
+
+.form__input.form__input--number input {
+  margin-left: 5px;
+  width: 50px;
+}
+
+.form__body {
+  display: flex;
+  flex-direction: row;
+  max-height: 100%;
+  overflow: hidden;
+  transition: max-height 180ms ease-out;
+}
+
+.form__collapser {
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: normal;
+}
+
+.form--collapsed .form__collapser:before {
+  content: "+ Show form";
+}
+
+.form__collapser:before {
+  content: "- Hide form";
+}
+
+.form--collapsed .form__body {
+  max-height: 0;
+}
+
+.form__title {
+  display: flex;
+  font-weight: bold;
+  font-size: 20px;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.form {
+  display: flex;
+}
