@@ -5,6 +5,7 @@ import './toggleInput'
 
 const
   h1 = $.div(css.header__title, 'Apps by Host'),
+  theme = $.div(css.header__theme),
   email = $.div(css.header__email, `for user myemail@gmail.com`),
   layoutToggler = document.createElement('toggle-input')
 
@@ -22,7 +23,7 @@ layoutToggler.toggle = function () {
   }
 }
 
-h1.onclick = () => $.darkMode()
+theme.onclick = () => $.darkMode()
 
-const Header = $.div(css.header, [h1, email, layoutToggler])
+const Header = $.div(css.header, [h1, theme, email, layoutToggler])
 export default Header

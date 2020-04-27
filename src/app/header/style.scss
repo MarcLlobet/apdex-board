@@ -12,7 +12,15 @@
   flex-shrink: 0;
   padding-right: 10px;
   margin-bottom: 23px;
+}
+
+.header__theme {
+  width: 20px;
+  height: 20px;
+  background: var(--title-text-color);
   cursor: pointer;
+  border-radius: 3px;
+  margin: 0 5px;
 }
 
 .header__email {

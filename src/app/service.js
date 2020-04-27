@@ -44,7 +44,6 @@ class Service {
     if (this.storedTimes === yielded) {
       this.emitUpdate()
       this.storedTimes++
-      console.log(this.storedData)
     }
 
   }
