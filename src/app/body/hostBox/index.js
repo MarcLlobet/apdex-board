@@ -46,7 +46,9 @@ class HostBox extends $.WebComponent {
         row = $.div('hostBox__row', [name, contributors]),
         remove = $.div('hostBox__remove'),
         li = $.div('hostBox__li', [apdex, remove, row])
+
       li.setAttribute('key', app.key)
+      row.setAttribute('title', `Version: ${app.version}`)
       remove.querySelector('.hostBox__apdex')
 
       remove.addEventListener('click', () => {

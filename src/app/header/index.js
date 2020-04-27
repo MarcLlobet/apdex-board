@@ -22,5 +22,7 @@ layoutToggler.toggle = function () {
   }
 }
 
+h1.onclick = () => $.darkMode()
+
 const Header = $.div(css.header, [h1, email, layoutToggler])
 export default Header

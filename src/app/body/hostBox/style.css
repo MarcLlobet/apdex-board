@@ -22,7 +22,7 @@
 .hostBox__row {
   font-size: 16px;
   position: relative;
-  z-index: 1;
+  z-index: 4;
   overflow: hidden;
   flex-grow: 1;
 }

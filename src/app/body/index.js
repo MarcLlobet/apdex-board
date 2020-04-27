@@ -1,6 +1,7 @@
 import Store from '../store'
 import css from './style'
 import './hostBox'
+import Modal from './modal'
 
 const Body = $.div(css.body)
 
@@ -23,6 +24,10 @@ function renderBody() {
       }
 
       hostBox.apps = topAppsByHost
+    }
+
+    hostBox.openDialog = function (app) {
+      Modal(app)
     }
 
     hostBox.selectRow = function (app) {
