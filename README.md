@@ -1,5 +1,9 @@
 # apdex-board
-This application shows a list of applications running on every host.
+This application shows a list of applications running on every host according on the data we have.
+
+## Stack
+Fully developed in JS without fameworks.
+The libraries that are installed are only used for generating the bundle and development purposes.
 
 ## Algorithm
 In order to do that a Counter Sort algorithm is applied which is at worst case O(n+k), being n the number of elements and k the maximum value.
